@@ -17,4 +17,10 @@ switch whatdata
         ids = ids{1};
         fclose(fid);
         data.ids = ids;
+    case{'list'}
+        fid = fopen('list.txt');
+        ids = textscan(fid, '%s');
+        ids = ids{1};
+        fclose(fid);
+        data.ids = ids;
 end;

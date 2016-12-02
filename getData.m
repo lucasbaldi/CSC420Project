@@ -23,4 +23,7 @@ switch whatdata
         ids = ids{1};
         fclose(fid);
         data.ids = ids;
+    case{'disparity'}
+        disparity = load(fullfile(RESULTS_DIR,'/disparity/', sprintf('%s.mat', imname)));
+        data = disparity.disp_map;
 end;

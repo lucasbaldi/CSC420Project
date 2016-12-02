@@ -4,6 +4,8 @@ im_right = getData(imName, 'right');
 im_left = rgb2gray(im_left.im);
 im_right = rgb2gray(im_right.im);
 
+%disp_map = disparity(im_left, im_right, 'BlockSize', 15, 'DisparityRange', [-6 10]);
 disp_map = disparity(im_left, im_right);
-disp_map = disp_map/max(disp_map(:));
+%disp_map = disp_map/max(disp_map(:));
+disp_map = disp_map/256;
 disp_map = imfill(disp_map);

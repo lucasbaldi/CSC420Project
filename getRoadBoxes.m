@@ -9,13 +9,27 @@ boxsize = 50;
 [roadpxrow, roadpxcol] = find(road == 255);
 [notRoadpxrow, notRoadpxcol] = find(road == 0);
 
-rowMedian = median(roadpxrow(:));
-colMedian = median(roadpxcol(:));
+rowMedian = round(median(roadpxrow(:)));
+colMedian = round(median(roadpxcol(:)));
 
-notroadrowMedian = median(notRoadpxrow(:));
-notroadcolMedian = median(notRoadpxcol(:));
+notroadrowMedian = round(median(notRoadpxrow(:)));
+notroadcolMedian = round(median(notRoadpxcol(:)));
 notRoad(:);
 for i=0:10:50
+    if(rowMedian < 50)
+       rowMedian = rowMedian + 50;
+    elseif(rowMedian + boxsize > size(road,1))
+      rowMedian = rowMedian - 50;
+    end
+    
+    if(colMedian < 50)
+        colMedian = colMedian + 50;
+    elseif(colMedian + boxsize < size(road, 2))
+        colMedian = colMedian - 50;
+
+    end
+    
+    %medians = [rowMedian-i, colMedian-i]
     
     roadtopleft = road(rowMedian-i, colMedian-i);
     roadbottomright = road(rowMedian - i + boxsize, colMedian - i + boxsize);

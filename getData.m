@@ -11,6 +11,14 @@ switch whatdata
         imfile = fullfile(LEFT_DATA_DIR, sprintf('%s.png', imname));
         im = imread(imfile);
         data.im = im;
+    case{'left-test'}
+        imfile = fullfile(LEFT_TEST_DIR, sprintf('%s.png', imname));
+        im = imread(imfile);
+        data.im = im;
+    case{'right-test'}
+        imfile = fullfile(RIGHT_TEST_DIR, sprintf('%s.png', imname));
+        im = imread(imfile);
+        data.im = im;
     case {'calib'}
         fid = fopen(fullfile(CALIB_DATA_DIR, [imname '.txt']), 'r+');
         ids = textscan(fid, '%s');
@@ -19,6 +27,12 @@ switch whatdata
         data.ids = ids;
     case{'list'}
         fid = fopen('list.txt');
+        ids = textscan(fid, '%s');
+        ids = ids{1};
+        fclose(fid);
+        data.ids = ids;
+    case{'testlist'}
+        fid = fopen('testlist.txt');
         ids = textscan(fid, '%s');
         ids = ids{1};
         fclose(fid);
@@ -40,4 +54,7 @@ switch whatdata
         %imnum = strrep(strrep(strrep(txt, 'umm_',''),'uu_',''), 'um_','');
         groundTruth = imread(fullfile(GT_DATA_DIR, sprintf('%sroad_%s.png',prefix, number)));
         data.groundTruth = groundTruth;
+    case{'classifier'}
+        classifier = load(fullfile(RESULTS_DIR, 'svmStruct.mat'));
+        data.classifier = classifier.svmStruct;
 end;

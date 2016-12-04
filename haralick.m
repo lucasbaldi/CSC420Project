@@ -50,29 +50,24 @@ function [haralick1 haralick2 haralick3 haralick4 haralick5] = haralick(glcm);
     end
 
     haralick3 = 0;
-
-    for i=1:size(glcm,1)
-        for j=1:size(glcm,1)
-
-            inner = ((i-mu_x)*(i - mu_y)*glcm(i,j)) / (sig_x * sig_y);
-            haralick3 = haralick3 + inner;
-        end
-    end
-
     haralick4 = 0;
+        haralick5 = 0;
+
     for i=1:size(glcm,1)
         for j=1:size(glcm,1)
+
+            h3inner = ((i-mu_x)*(i - mu_y)*glcm(i,j)) / (sig_x * sig_y);
+            haralick3 = haralick3 + h3inner;
+            
             haralick4 = haralick4 + ((i-mu)^2 * glcm(i,j));
+            
+            h5inner = (1/(1+(i-j)^2)) * glcm(i,j); 
+            haralick5 = haralick5 + h5inner;  
+
         end
     end
 
-    haralick5 = 0;
-    for i=1:size(glcm,1)
-        for j=1:size(glcm,1)
-            inner = (1/(1+(i-j)^2)) * glcm(i,j); 
-            haralick5 = haralick5 + inner;     
-        end
-    end
+
     
 end
 

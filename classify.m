@@ -8,15 +8,15 @@ list = list.ids;
  %   imname = list{i};
 imleft = getData(imname, 'left-test');
 imleft = imleft.im;
-hsvim = rgb2hsv(imleft./256);
+hsvim = rgb2hsv(imleft);
     
 classifier = getData('', 'classifier');
-classifier = classifier.classifier;
+classifier = classifier.classifier
 
 classified = zeros(size(imleft, 1), size(imleft, 2));
     
-rowbound = [26 : size(imleft,1)-26];
-colbound = [26 : size(imleft,2)-26];
+rowbound = [26:size(imleft,1)-26];
+colbound = [26:size(imleft,2)-26];
 
 for i=rowbound;
     i
@@ -25,7 +25,9 @@ for i=rowbound;
         imageSection = imleft(box(1):box(3), box(2):box(4), :);
         glcm = graycomatrix(rgb2gray(imageSection));
         [h1 h2 h3 h4 h5] = haralick(glcm);
-        feature = [hsvim(i, j, 1) hsvim(i, j, 2) hsvim(i,j, 3) h1 h2 h3 h4 h5];
+        haralicks = [h1 h2 h3 h4 h5];
+        haralicks = haralicks./max(haralicks(:));
+        feature = [hsvim(i, j, 1) hsvim(i, j, 2) hsvim(i,j, 3) haralicks(1) haralicks(2) haralicks(3) haralicks(4) haralicks(5)];
         group = svmclassify(classifier, feature);
         classified(i, j) = group;
         

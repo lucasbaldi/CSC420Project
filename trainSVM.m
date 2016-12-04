@@ -20,7 +20,7 @@ function svmStruct = trainSVM;
         leftim = leftim.im;
 
         roadSection = leftim(topleftrow:bottomrightrow, topleftcol:bottomrightcol,:);
-        roadhsv = rgb2hsv(roadSection./256);
+        roadhsv = rgb2hsv(roadSection);
         roadgrey = rgb2gray(roadSection);
         roadGLCM = graycomatrix(roadgrey);
 
@@ -28,13 +28,14 @@ function svmStruct = trainSVM;
         
         
         [haralick1 haralick2 haralick3 haralick4 haralick5] = haralick(roadGLCM);
- 
+        haralicks = [haralick1 haralick2 haralick3 haralick4 haralick5];
+        haralicks = haralicks./max(haralicks(:));
         
         %8 dimensional feature vector, 
         % first 3 are the hsv colour values at the middle of the box
         % last 5 are the first 5 haralick features of the 50x50 pixel
         % bounding box
-        feature = [roadhsv(25, 25, 1) roadhsv(25, 25, 2) roadhsv(25, 25,3)  haralick1 haralick2 haralick3 haralick4 haralick5];
+        feature = [roadhsv(25, 25, 1) roadhsv(25, 25, 2) roadhsv(25, 25,3)  haralicks(1) haralicks(2) haralicks(3) haralicks(4) haralicks(5)];
         data(2*i-1,:) = feature;
         group(2*i-1) = 1;
         
@@ -46,13 +47,15 @@ function svmStruct = trainSVM;
         bottomrightcol = notroadbox(4);
 
         notRoadSection = leftim(topleftrow:bottomrightrow, topleftcol:bottomrightcol,:);
-        notRoadhsv = rgb2hsv(notRoadSection./256);
+        notRoadhsv = rgb2hsv(notRoadSection);
         notRoadgrey = rgb2gray(notRoadSection);
         notRoadGLCM = graycomatrix(notRoadgrey);
 
          
         [haralick1 haralick2 haralick3 haralick4 haralick5] = haralick(notRoadGLCM);
-        feature = [notRoadhsv(25, 25, 1) notRoadhsv(25, 25, 2) notRoadhsv(25, 25,3)  haralick1 haralick2 haralick3 haralick4 haralick5];
+        haralicks = [haralick1 haralick2 haralick3 haralick4 haralick5];
+        haralicks = haralicks./max(haralicks(:));
+        feature = [notRoadhsv(25, 25, 1) notRoadhsv(25, 25, 2) notRoadhsv(25, 25,3)  haralicks(1) haralicks(2) haralicks(3) haralicks(4) haralicks(5)];
         data(2*i,:) = feature;
         group(2*i) = 0;
 
@@ -63,7 +66,7 @@ function svmStruct = trainSVM;
             'missing notroadbox'
         end
     end
-    
+    group
     svmStruct = svmtrain(data, group);
     save(fullfile(RESULTS_DIR,'svmStruct.mat'), 'svmStruct');
     

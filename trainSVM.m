@@ -67,7 +67,7 @@ function svmStruct = trainSVM;
         end
     end
     group
-    svmStruct = svmtrain(data, group);
+    svmStruct = svmtrain(data, group, 'kernel_function','rbf');
     save(fullfile(RESULTS_DIR,'svmStruct.mat'), 'svmStruct');
     
 end

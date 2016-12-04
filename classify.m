@@ -33,4 +33,5 @@ for i=rowbound;
         
     end
 end
+figure;
 imshow(classified);

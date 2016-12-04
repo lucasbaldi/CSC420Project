@@ -1,4 +1,4 @@
-function testlist = test;
+function test;
 
 globals;
 list = getData('', 'testlist');
@@ -9,7 +9,7 @@ testlist = ['um_000000 ',
             'um_000032 '
             'um_000043 ',
             'um_000054 ',
-            'uu_000065 ',
+            'uu_000000 ',
             'uu_000021 ',
             'uu_000032 ',
             'uu_000043 ',
@@ -27,7 +27,11 @@ for i=1:size(testlist,1)
     im = im.im;
     if(i==4)
        figure; imshow(im); 
+       classified = classify(imname);
+       imwrite(classified, [RESULTS_DIR, '/', testlist{i}, '_classified.png']);
     end
+    
+    %save([REULTS_DIR, testlist{i},''
     %[xyz] = calculateWorldPosition(imname);
     %save([RESULTS_DIR, '/disparity/',list{i}],'disp_map');
 end

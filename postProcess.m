@@ -1,7 +1,6 @@
 function postProcess;
 
 globals;
-
 testlist = ['um_000000 ',
             'um_000021 ',
             'um_000032 '
@@ -19,15 +18,18 @@ testlist = ['um_000000 ',
             'umm_000054'];
 testlist =  cellstr(testlist);
 
-%for i=1:size(testlist,1)  
-    imname = %testlist(i);
+for i=1:size(testlist,1)  
+    imname = testlist(i);
+    
+    %Get the classified image
     data = getData(char(imname),'classified');
     im = data.classified;
-    figure;imshow(im);
+    
+    %Hit it with a gaussian and threshold it
     conv = imgaussfilt(im, 4);
     conv(conv<200) = 0;
-    %figure;imshow(conv);
-    [RESULTS_DIR, '/', imname, '_classified_thresholded.png']
+    
+    %Write out the post processed results
     imwrite(conv, fullfile(RESULTS_DIR, sprintf( '%s_classified_thresholded.png', char(imname))));
 
-%end
+end

@@ -1,6 +1,7 @@
 function [xyz] = calculateWorldPosition(imname);
+%world coordinate calculations done by Cong Hua Chen 
 %x = (f*X)/Z + px
-globals;
+global1s;
 
 %x - px = f(*X)/Z
 %Z(x - px) = f*X

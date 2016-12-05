@@ -1,13 +1,10 @@
 function [depth, normDepth] = calculateDepth(imname);
+%depth calculations done by Cong Hua Chen 
 globals;
 baseline = 0.54;
 disparity = getData(imname, 'disparity');
 disparity = disparity.disp;
 
-%disparity = StereoDisparityMap(imname);
-%figure;
-%imshow(disparity/max(disparity(:)));
-%title('normalized disparity');
 
 [K2 R2 K3 R3] = getCameraMatrices(imname);
 f1x = K2(1,1);
@@ -23,17 +20,3 @@ depth(depth<eps) = 0;
 normDepth = depth./300;
 %imwrite(depth, fullfile(DEPTH_DIR, sprintf('%s.png', imname) ) );
 save(fullfile(DEPTH_DIR, sprintf('%s', imname)), 'depth');
-
-% 'mean';
-% mean(normDepth(:));
-% 
-% figure;
-% imshow(normDepth);
-% title('normDepth');
-% 
-% figure;
-%imagesc(depth);
-% title('depth');
-% 
-% 'max';
-% max(normDepth(:));

@@ -1,3 +1,5 @@
+%Using SPS stereo to create disparity images
+%done by Cong Hua Chen
 globals;
 list = getData('', 'list');
 list = list.ids;

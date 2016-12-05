@@ -57,4 +57,7 @@ switch whatdata
     case{'classifier'}
         classifier = load(fullfile(RESULTS_DIR, 'svmStruct.mat'));
         data.classifier = classifier.svmStruct;
+    case{'classified'}
+        classified = imread(fullfile(RESULTS_DIR, sprintf('%s_classified.png',imname)));
+        data.classified = classified;
 end;

@@ -19,7 +19,7 @@ rowbound = [26:size(imleft,1)-26];
 colbound = [26:size(imleft,2)-26];
 
 for i=rowbound;
-    i
+    %i
     for j=colbound;
         box = [i-25 j-25 i+25 j+25];
         imageSection = imleft(box(1):box(3), box(2):box(4), :);
@@ -33,5 +33,5 @@ for i=rowbound;
         
     end
 end
-figure;
-imshow(classified);
+%figure;
+%imshow(classified);
